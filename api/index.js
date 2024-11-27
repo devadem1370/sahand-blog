@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from 'dotenv'
+import cors from 'cors'
 
 import authRouter from './routes/auth.route.js'
 
@@ -11,6 +12,11 @@ mongoose.connect(process.env.MONGO).then(()=>{
 }).catch(err=> {console.log("Error connectiong to database:" ,err)})
 
 const app = express();
+app.use(cors({
+    origin: 'http://localhost:5173', // Your Vite frontend development server
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  }));
 app.use(express.json())
 const PORT = 3000;
 
